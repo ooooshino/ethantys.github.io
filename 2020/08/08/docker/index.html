@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="OOOOSHINO,tangyusen9@gmail.com"><title> · ooooshino的🛖</title><meta name="description" content="Docker学习笔记什么是docker什么是docker，我认为docker你可以看成一个集装箱，每个箱子的空间所做的事情，都是互不相干的，docker如今已经发展成了一个生态体系，很多服务和系统都围绕着docker来写，因此，作为一个程序员，学习docker是必不可少的，docker对于开发人员还"><meta name="keywords" content="oshino,两仪猿,ooooshino,EthanTYS"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.svg" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/icons/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;300;400;500;700&amp;display=swap"><meta name="generator" content="Hexo 5.4.0"></head><body><div class="sidebar"><div class="logo-title"><div class="title"><img src="/images/oshino.svg" style="width:267px;"><h3 title="">我们在以自己的方式努力着去成为自己想成为的人，这段时间，我们一直在成长，大脑不能记下每时每刻，但这里可以</h3><p class="description">🔗 近期目标：<span>备考CET-6</span></p></div><ul class="social-links">🔗 社交链接：<li><a target="_blank" rel="noopener" href="https://twitter.com/tangyuse"><i class="fa fa-twitter"></i></a></li><li><a target="_blank" rel="noopener" href="http://instagram.com/tangsenyu0915"><i class="fa fa-instagram"></i></a></li><li><a href="/atom.xml"><i class="fa fa-rss"></i></a></li><li><a target="_blank" rel="noopener" href="http://weibo.com/ooooshino"><i class="fa fa-weibo"></i></a></li><li><a target="_blank" rel="noopener" href="http://github.com/ooooshino"><i class="fa fa-github"></i></a></li></ul></div><div class="banner"> <img src="/images/banner.jpg" style="width:300px;"></div><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a target="_blank" rel="noopener" href="https://github.com/EthanTYS/ethantys.github.io">ooooshino</a><div class="run"><span>It's been running for 20 days</span></div><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top"><div class="nav"><li><a href="/">Home</a></li><li><a target="_blank" rel="noopener" href="https://cnotion.notion.site/OOOOSHINO-772d5e9b160b48d69ffbd5e40f70b11f">About</a></li><li><a href="/archives">Archive</a></li><li><a href="/atom.xml">RSS</a></li></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post"><div class="post-title"><h3><a></a></h3></div><div class="post-content"><h1 id="Docker学习笔记"><a href="#Docker学习笔记" class="headerlink" title="Docker学习笔记"></a>Docker学习笔记</h1><h2 id="什么是docker"><a href="#什么是docker" class="headerlink" title="什么是docker"></a>什么是docker</h2><p>什么是docker，我认为docker你可以看成一个集装箱，每个箱子的空间所做的事情，都是互不相干的，docker如今已经发展成了一个生态体系，很多服务和系统都围绕着docker来写，因此，作为一个程序员，学习docker是必不可少的，docker对于开发人员还有这一句口号：Build once,Run anywhere,对于运维人员也有一句：Configure once,Run anywhere。</p>
+<p>docker采用的是容器化技术，人们通常会拿来和虚拟机来比较</p>
+<p>虚拟机采用的底层硬件的支持和虚拟化技术，在一台电脑上开辟一块空间，独立的运行一个新系统（Guest OS）</p>
+<p>然后再打包软件再这些系统上运行，这样的话比较安装，因为系统与系统之间是独立的</p>
+<p>而容器技术，则没有采用虚拟机技术，运行起来也相对轻量，运行的时候直接共享宿主机的linux内核的Cgroup和namespace,来做到资源的隔离和限制，导致每个容器再运行的时候，是宿主机的一个特殊进程，有利也有弊，容器技术没有传统虚拟机的独立性那么好</p>
+<table>
+<thead>
+<tr>
+<th>-</th>
+<th>虚拟机</th>
+<th>docker容器</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>操作系统</td>
+<td>宿主机上运行虚拟机OS</td>
+<td>共享宿主机OS</td>
+</tr>
+<tr>
+<td>存储</td>
+<td>镜像较大（GB）</td>
+<td>镜像小（MB）</td>
+</tr>
+<tr>
+<td>性能</td>
+<td>操作系统额外的cpu、内存消耗</td>
+<td>几乎无性能损耗</td>
+</tr>
+<tr>
+<td>移植</td>
+<td>性笨重、与虚拟化技术耦合度高</td>
+<td>轻量、灵活迁移</td>
+</tr>
+<tr>
+<td>隔离性</td>
+<td>完全隔离</td>
+<td>安全隔离</td>
+</tr>
+<tr>
+<td>部署</td>
+<td>慢、分钟级</td>
+<td>快速、秒级</td>
+</tr>
+<tr>
+<td>运行密度</td>
+<td>一般几十个</td>
+<td>单机支持上千容器</td>
+</tr>
+</tbody></table>
+<h2 id="容器如何工作"><a href="#容器如何工作" class="headerlink" title="容器如何工作"></a>容器如何工作</h2><p>容器分为了三部分：1.Client   2.DOCKER_HOST  3.Registry</p>
+<ol>
+<li><p>Client:<br> 主要用来发起指令 dorker build 、docker pull 、 docker run …..</p>
+</li>
+<li><p>DOCKER_HOST</p>
+</li>
+<li><p>Registry</p>
+</li>
+</ol>
+<p>假如我们再Client执行docker run ，Client会把这条指令提交到DOCKER_HOST的Docker daemon（docker服务后端服务端）,Docker daemon 随后会调用本机的docker镜像，从而创建用户所需要的容器，如果本机的docker镜像不存在，docker daemon就会连接Registry，从仓库去下载镜像（当然，可以直接提交从Registry下载镜像的指令） </p>
+<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><h3 id="镜像相关命令"><a href="#镜像相关命令" class="headerlink" title="镜像相关命令"></a>镜像相关命令</h3><ol>
+<li>docker search</li>
+<li>docker iamges</li>
+<li>docker pull</li>
+<li>docker rmi</li>
+</ol>
+<h3 id="容器相关命令"><a href="#容器相关命令" class="headerlink" title="容器相关命令"></a>容器相关命令</h3><ol>
+<li>docker run</li>
+<li>docker ps</li>
+<li>docker rm</li>
+<li>docker start</li>
+<li>docker stop</li>
+<li>docker restart</li>
+<li>docker kill</li>
+</ol>
+<h3 id="其他常用命令图示"><a href="#其他常用命令图示" class="headerlink" title="其他常用命令图示"></a>其他常用命令图示</h3><p><img src="https://s1.ax1x.com/2020/05/18/YWSGbq.png" alt="YWSGbq.png"></p>
+<p>注：当我们以交互的方式进入容器时，想要退出时敲exit即可，但exit是退出并删除容器，我们有些时候需要退出容器却不删除，这时可用Ctrl + P + Q</p>
+<h2 id="Docker精髓"><a href="#Docker精髓" class="headerlink" title="Docker精髓"></a>Docker精髓</h2><h3 id="容器数据卷"><a href="#容器数据卷" class="headerlink" title="容器数据卷"></a>容器数据卷</h3><p>我们知道，容器删了，该容器的数据就都没有了，可现实中我们通常需要数据的存储，因为有了需求，希望数据可以持久化，所以就有了容器数据卷</p>
+<p>数据卷挂载分为三种方式</p>
+<ol>
+<li><p>-v<br> （-v 主机目录:容器目录）指定目录挂载</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run -it -v /home/test:/home centos</span><br><span class="line"><span class="meta">#</span><span class="bash"> 这样主机下的/home/<span class="built_in">test</span>就和容器内的/home同步起来了</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 在容器下的/home新建一个test.txt，返回主机查看，发现多了一个test.txt</span></span><br></pre></td></tr></table></figure>
+
+<p> （-v 名字:容器目录）具名挂载</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it -v test:/home centos</span><br></pre></td></tr></table></figure>
+
+<p> （-v 容器目录）匿名挂载</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it -v /home centos</span><br></pre></td></tr></table></figure></li>
+<li><p>DockerFile的VOLUME来挂载</p>
+<p> dockerfile可以通过docker build来执行，对于DockerFile的使用，下面会讲,这里给个简单的小例子，在/home/test下新建一个dockerfile1,用vim来编辑，以下为内容</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FROM centos</span><br><span class="line">VOLUME [&quot;容器挂载目录&quot;,&quot;容器挂载目录&quot;,&quot;多个的话用逗号隔开&quot;]</span><br><span class="line">CMD echo &quot;----end----&quot;</span><br><span class="line">CMD /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p> 通过docker build -f /这个dockerfile的目录/dockerfile1 -t name:tag来执行，比如</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -f /home/test/dockerfile1 -t newCentos:1.0 .    (记住这里有个点，不然会报错)</span><br></pre></td></tr></table></figure>
+
+<p> build完只是创建了一个image，还要run一下才会进行挂载</p>
+<p> 这种方式挂载的数据卷是匿名挂载，可通过docker inspect查看所挂载的主机目录，一般都是在/var/lib/docker/volmes下</p>
+</li>
+<li><p>–volumes-from<br> –volumes-from的使用，我们看个例子，先执行dockerfile，生成一个test:1.0的centos镜像</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FROM centos</span><br><span class="line">VOLUME [&quot;volumeFolder&quot;]</span><br><span class="line">CMD echo &quot;----end----&quot;</span><br><span class="line">CMD /bin/bash</span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -f dockerfile的路径 -t test:1.0 .</span><br></pre></td></tr></table></figure>
+
+<p> 然后启动一个名为centos1的centos容器，</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --name centos1 test:1.0</span><br></pre></td></tr></table></figure>
+
+<p> ls可以看到有一个已经挂载的目录，叫”volumeFolder“，到这里是我们的第二种的挂载方式</p>
+<p> 我们另外开一个ssh窗口，docker ps可以看到centos1正在运行着，把这个正在运行的容器称为数据卷容器，接下来使用–volume-from进行挂载</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --name centos2 --volume-from centos1 test:1.0</span><br></pre></td></tr></table></figure>
+
+<p> ls查看目录，也能看到目录底下有volumeFolder,你在centos1里往volumeFloder添加的东西，centos2都会同步过来</p>
+<p> 你可以再开一个ssh窗口，在两个容器在进行操作的同时，docker inspect 查看centos1挂载的主机目录，在进行查看变化，可以发现所挂在的磁盘都是互相共享的。</p>
+<p> 除了指定目录挂载，其他的俩种方式，挂在后的数据存放在主机目录的/var/lib/docker/volumes/下，匿名挂载所生成的名字是唯一的，通常我们都会使用具名挂载。此外，我们还可通过docker volume COMMAND COMMAND 查看数据卷的挂载情况</p>
+<p> 通过-v挂载的数据卷，还可以通过inspect的mounted属性查看是否挂载成功（不成功不会显示以下信息）<br> <img src="https://s1.ax1x.com/2020/05/19/Y5Znuq.png" alt="Y5Znuq.png"></p>
+</li>
+</ol>
+<p>到此，以上就是本次学习的三种数据卷的挂载了</p>
+<h3 id="DockerFile"><a href="#DockerFile" class="headerlink" title="DockerFile"></a>DockerFile</h3><p>上面也接触到了，其实dockerfile就是一个脚本文件，其核心作用是通过build来执行，生成一个image，步骤分为三步</p>
+<ol>
+<li><p>编写一个dockerfile文件</p>
+</li>
+<li><p>docker build生成一个镜像</p>
+</li>
+<li><p>docker run 执行一个镜像</p>
+</li>
+<li><p>docker pull 发布一个镜像（发布到docker hub或者阿里云镜像仓库）</p>
+</li>
+</ol>
+<h4 id="dockerfile命令"><a href="#dockerfile命令" class="headerlink" title="dockerfile命令"></a>dockerfile命令</h4><p>知道了dockerfile是干嘛的，让我们开始学习以下dockerfile该如何写把，</p>
+<ol>
+<li><p>每个保留关键字必须都是大写字母</p>
+</li>
+<li><p>从上到下的执行顺序</p>
+</li>
+<li><p>#这是注释</p>
+</li>
+<li><p>一行一行的执行，每一行都会生成一个镜像</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FROM</td>
+<td>指定基础镜像</td>
+</tr>
+<tr>
+<td>MAINTAINWE</td>
+<td>指定维修人</td>
+</tr>
+<tr>
+<td>RUN</td>
+<td>要执行的命令</td>
+</tr>
+<tr>
+<td>ADD</td>
+<td>添加其他包</td>
+</tr>
+<tr>
+<td>WORKDIR</td>
+<td>指定工作目录</td>
+</tr>
+<tr>
+<td>VOLUME</td>
+<td>挂载的目录</td>
+</tr>
+<tr>
+<td>EXPOSE</td>
+<td>指定暴露的端口</td>
+</tr>
+<tr>
+<td>CMD</td>
+<td>指定容器启动的时候运行的命令</td>
+</tr>
+<tr>
+<td>ENTRYPOINT</td>
+<td>和CMD一样都是启动后要运行的命令，不同在于CMD是执行最后一个，而ENTRYPOINT是进行追加的方式</td>
+</tr>
+<tr>
+<td>ONBUILD</td>
+<td>当构建一个被继承的DockerFile，这个时候就会触发ONBUILD执行</td>
+</tr>
+<tr>
+<td>COPY</td>
+<td>将主机文件拷贝到镜像中</td>
+</tr>
+<tr>
+<td>ENV</td>
+<td>构建的时候设置环境变量</td>
+</tr>
+</tbody></table>
+<h4 id="发布镜像"><a href="#发布镜像" class="headerlink" title="发布镜像"></a>发布镜像</h4><ol>
+<li><p>docker hub</p>
+<p> 先到dockerhub的官方页面，注册一个账号，然后回到ssh，docker login -u 账户 -p 密码,然后docker push name:tag就行了</p>
+</li>
+<li><p>阿里云镜像仓库</p>
+<p> 登录阿里云，进入容器镜像服务，创建一个命令空间，然后创建一个镜像仓库，创建完阿里云会给教程，按着来就行</p>
+</li>
+</ol>
+<h3 id="Docker网络"><a href="#Docker网络" class="headerlink" title="Docker网络"></a>Docker网络</h3></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2020-08-08</span><i class="fa fa-comment-o"></i><a href="/2020/08/08/docker/#comments">Comments</a><i class="fa fa-tag"></i></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,https://oshino.cc/2020/08/08/docker/,ooooshino的🛖,,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2020/08/08/ES6%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/" title="">Prev Post</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2020/03/18/how%20to%20relaxing/" title="How to relaxing">Next Post</a></li></ul></div><a id="comments"></a><div id="disqus_thread"></div><script>var disqus_shortname = 'ooooshino';
+var disqus_identifier = '2020/08/08/docker/';
+var disqus_title = '';
+var disqus_url = 'https://oshino.cc/2020/08/08/docker/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//#{theme.disqus}.disqus.com/count.js" async></script></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
